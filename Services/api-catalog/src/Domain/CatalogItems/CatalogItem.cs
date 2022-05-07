@@ -46,25 +46,25 @@ public class CatalogItem : ICatalogItem
     /// Get CatalogItemId.
     /// </summary>
     /// <value>CatalogItemId.</value>
-    public CatalogItemId CatalogItemId { get; set; }
+    public CatalogItemId CatalogItemId { get; }
 
     /// <summary>
     /// Get item name.
     /// </summary>
     /// <value>string.</value>
-    public string Name { get; set; }
+    public string Name { get; private set; }
 
     /// <summary>
     /// Item description.
     /// </summary>
     /// <value>string.</value>
-    public string Description { get; set; }
+    public string Description { get; private set; }
 
     /// <summary>
     /// Item price.
     /// </summary>
     /// <value>decimal.</value>
-    public decimal Price { get; set; }
+    public decimal Price { get; private set; }
 
     /// <summary>
     /// Get available stock.
@@ -76,31 +76,31 @@ public class CatalogItem : ICatalogItem
     /// Get picture name.
     /// </summary>
     /// <value>string.</value>
-    public string PictureName { get; set; }
+    public string PictureName { get; private set; }
 
     /// <summary>
     /// Get picture uri.
     /// </summary>
     /// <value>string.</value>
-    public string PictureUri { get; set; }
+    public string PictureUri { get; private set; }
 
     /// <summary>
     /// Get restock threshold.
     /// </summary>
     /// <value>int.</value>
-    public int RestockThreshold { get; set; }
+    public int RestockThreshold { get; private set; }
 
     /// <summary>
     /// Get on reorder.
     /// </summary>
     /// <value>bool.</value>
-    public bool OnReorder { get; set; }
+    public bool OnReorder { get; private set; }
 
     /// <summary>
     /// Get maximum stock threshold.
     /// </summary>
     /// <value>int.</value>
-    public int MaxStockThreshold { get; set; }
+    public int MaxStockThreshold { get; private set; }
 
     /// <inheritdoc/>
     public int AddStock(int quantityToBeAdded)

@@ -17,7 +17,7 @@ public sealed class CatalogItemNull : ICatalogItem
     /// Initializes CatalogItemId with Guid.Empty.
     /// </summary>
     /// <returns>CatalogItemId.</returns>
-    public CatalogItemId CatalogItemId { get; } = new CatalogItemId(Guid.Empty);
+    public CatalogItemId CatalogItemId { get; } = new(Guid.Empty);
 
     /// <inheritdoc>
     public int AddStock(int quantityToBeAdded) => int.MinValue;
