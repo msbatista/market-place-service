@@ -57,13 +57,13 @@ public class CatalogItem : ICatalogItem
     }
 
     /// <summary>
-    /// Get CatalogItemId.
+    /// Gets CatalogItemId.
     /// </summary>
     /// <value>CatalogItemId.</value>
     public CatalogItemId CatalogItemId { get; }
 
     /// <summary>
-    /// Get item name.
+    /// Gets item name.
     /// </summary>
     /// <value>string.</value>
     public string Name { get; set; }
@@ -81,49 +81,49 @@ public class CatalogItem : ICatalogItem
     public Price Price { get; set; }
 
     /// <summary>
-    /// Get item price.
+    /// Gets item price.
     /// </summary>
     /// <value>decimal.</value>
     public decimal Value { get; set; }
 
     /// <summary>
-    /// Get item currency.
+    /// Gets item currency.
     /// </summary>
     /// <value>string.</value>
     public string Currency { get; set; }
 
     /// <summary>
-    /// Get available stock.
+    /// Gets available stock.
     /// </summary>
     /// <value>int.</value>
     public int AvailableStock { get; set; }
 
     /// <summary>
-    /// Get picture name.
+    /// Gets picture name.
     /// </summary>
     /// <value>string.</value>
     public string PictureName { get; set; }
 
     /// <summary>
-    /// Get picture uri.
+    /// Gets picture uri.
     /// </summary>
     /// <value>string.</value>
     public string PictureUri { get; set; }
 
     /// <summary>
-    /// Get restock threshold.
+    /// Gets restock threshold.
     /// </summary>
     /// <value>int.</value>
     public int RestockThreshold { get; set; }
 
     /// <summary>
-    /// Get on reorder.
+    /// Gets whether or not item is on reorder.
     /// </summary>
     /// <value>bool.</value>
     public bool OnReorder { get; set; }
 
     /// <summary>
-    /// Get maximum stock threshold.
+    /// Gets maximum stock threshold.
     /// </summary>
     /// <value>int.</value>
     public int MaxStockThreshold { get; set; }
