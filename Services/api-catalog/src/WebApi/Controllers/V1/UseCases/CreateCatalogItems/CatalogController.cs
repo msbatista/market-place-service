@@ -11,7 +11,7 @@ namespace WebApi.Controllers.V1.UseCases.CreateCatalogItems;
 /// </summary>
 [ApiController]
 [ApiVersion("1.0")]
-[Route("api/v{version}:apiVersion/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class CatalogController : ControllerBase
 {
     private readonly ICreateCatalogItemUseCase _useCase;

@@ -49,11 +49,14 @@ public sealed class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogI
             .UsePropertyAccessMode(PropertyAccessMode.FieldDuringConstruction)
             .IsRequired();
 
-        builder.Property(c => c.Price.Value)
+        builder.Property(c => c.Value)
+            .HasColumnType("decimal(18,4)")
             .UsePropertyAccessMode(PropertyAccessMode.FieldDuringConstruction)
             .IsRequired();
+
+        builder.Ignore(c => c.Price);
         
-        builder.Property(c => c.Price.Currency)
+        builder.Property(c => c.Currency)
             .HasMaxLength(DbLimits.TINIER_TEXT)
             .UsePropertyAccessMode(PropertyAccessMode.FieldDuringConstruction)
             .IsRequired();
@@ -83,5 +86,8 @@ public sealed class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogI
         builder.Property(c => c.MaxStockThreshold)
             .UsePropertyAccessMode(PropertyAccessMode.FieldDuringConstruction)
             .IsRequired();
+
+        builder.HasOne(c => c.CatalogBrand).WithOne();
+        builder.HasOne(c => c.CatalogType).WithOne();
     }
 }

@@ -55,6 +55,6 @@ public sealed class CatalogContext : DbContext
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        SeedData.Seed(modelBuilder);
+        // SeedData.Seed(modelBuilder);
     }
 }

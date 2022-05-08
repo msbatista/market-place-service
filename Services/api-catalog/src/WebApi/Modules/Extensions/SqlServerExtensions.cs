@@ -1,6 +1,7 @@
 using Application.Services;
 using Domain;
 using Infrastructure.DataAccess;
+using Infrastructure.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Modules.Extensions;
@@ -29,6 +30,7 @@ public static class SqlServerExtensions
         });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ICatalogItemRepository, CatalogItemRepository>();
         services.AddScoped<IEntityFactory, EntityFactory>();
 
         return services;

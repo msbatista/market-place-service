@@ -28,15 +28,17 @@ public sealed class ContextFactory : IDesignTimeDbContextFactory<CatalogContext>
 
     private static string ReadDefaultConnectionStringFromAppSettings()
     {
-        string? envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        string? environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()))
-            .AddJsonFile("appsettings.json", false)
+            .AddJsonFile("appsettings.json", true)
+            .AddJsonFile($"appsettings.{environment}.json", true)
             .AddEnvironmentVariables()
             .Build();
 
-        string connectionString = configuration.GetValue<string>("ConnectionStrings__CatalogDb");
+        string connectionString = configuration.GetConnectionString("CatalogDb");
+        
         return connectionString;
     }
 }
