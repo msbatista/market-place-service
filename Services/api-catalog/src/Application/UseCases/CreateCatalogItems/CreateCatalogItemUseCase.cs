@@ -35,6 +35,7 @@ public sealed class CreateCatalogItemUseCase : ICreateCatalogItemUseCase
         _logger = logger;
     }
 
+    /// <inheritdoc />
     public async Task<CatalogItem> Execute(CatalogItemModel catalogItem)
     {
         _logger.LogInformation("Inseting product into database.");
