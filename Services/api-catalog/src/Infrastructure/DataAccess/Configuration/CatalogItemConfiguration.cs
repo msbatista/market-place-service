@@ -87,7 +87,7 @@ public sealed class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogI
             .UsePropertyAccessMode(PropertyAccessMode.FieldDuringConstruction)
             .IsRequired();
 
-        builder.HasOne(c => c.CatalogBrand).WithOne();
-        builder.HasOne(c => c.CatalogType).WithOne();
+        builder.HasOne(c => c.CatalogBrand);
+        builder.HasOne(c => c.CatalogType);
     }
 }
