@@ -14,7 +14,7 @@ public sealed class PaginatedItems<TEntity> where TEntity : class
     /// <param name="pageIndex"></param>
     /// <param name="count"></param>
     /// <param name="data"></param>
-    public PaginatedItems(int pageSize, int pageIndex, int count, IList<TEntity> data)
+    public PaginatedItems(int pageSize, int pageIndex, long count, IList<TEntity> data)
     {
         this.PageSize = pageSize;
         this.PageIndex = pageIndex;

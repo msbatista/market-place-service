@@ -23,4 +23,8 @@ public readonly struct Price : IEquatable<Price>
     public override int GetHashCode() => HashCode.Combine(this.Value, this.Currency);
 
     public override string? ToString() => $"{this.Value} {this.Currency}";
+
+    public static bool operator ==(Price left, Price right) => left.Equals(right);
+
+    public static bool operator !=(Price left, Price right) => left.Equals(right);
 }
