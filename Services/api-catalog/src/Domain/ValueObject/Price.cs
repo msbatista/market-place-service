@@ -2,6 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Domain.ValueObject;
 
+/// <summary>
+/// Represents an item price with currency.
+/// </summary>
 public readonly struct Price : IEquatable<Price>
 {
     public Price(decimal value, Currency currency)

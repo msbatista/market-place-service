@@ -23,8 +23,8 @@ public sealed class EntityFactory : IEntityFactory
         int restockThreshold, 
         bool onReorder,
         int maxStockThreshold, 
-        CatalogTypeId catalogTypeId, 
-        CatalogBrandId catalogBrandId)
+        Guid catalogTypeId, 
+        Guid catalogBrandId)
         => new(
             new CatalogItemId(Guid.NewGuid()),
             name,
@@ -37,8 +37,8 @@ public sealed class EntityFactory : IEntityFactory
             restockThreshold,
             onReorder,
             maxStockThreshold,
-            catalogTypeId,
-            catalogBrandId);
+            new(catalogTypeId),
+            new(catalogBrandId));
 
     /// <inheritdoc />
     public CatalogType NewCatalogType(string type) => new(new CatalogTypeId(Guid.NewGuid()), type);

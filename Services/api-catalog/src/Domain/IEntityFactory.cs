@@ -51,6 +51,6 @@ public interface IEntityFactory
         int restockThreshold,
         bool onReorder,
         int maxStockThreshold,
-        CatalogTypeId catalogTypeId,
-        CatalogBrandId catalogBrandId);
+        Guid catalogTypeId,
+        Guid catalogBrandId);
 }
