@@ -8,14 +8,22 @@ namespace Infrastructure.DataAccess.Repositories;
 
 public sealed class CatalogItemRepository : ICatalogItemRepository
 {
-    public Task CreateCatalogItem(CatalogItem catalogItem)
+    private readonly CatalogContext _context;
+
+    public CatalogItemRepository(CatalogContext context) => _context = context;
+
+    public async Task CreateCatalogItem(CatalogItem catalogItem)
     {
-        throw new NotImplementedException();
+        await _context
+            .CatalogItems
+            .AddAsync(catalogItem);
     }
 
-    public Task DeleteCatalogItem(CatalogItemId itemId)
+    public void DeleteCatalogItem(CatalogItem catalogItem)
     {
-        throw new NotImplementedException();
+         _context
+            .CatalogItems
+            .Remove(catalogItem);
     }
 
     public Task<IList<CatalogBrand>> GetCatalogBrands()
@@ -28,37 +36,37 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
         throw new NotImplementedException();
     }
 
-    public Task<IList<CatalogItem>> GetCatalogItems(int pageSize = 10, int pageIndex = 0, CatalogItemId[]? ids = null)
+    public Task<PaginatedItems<CatalogItem>> GetCatalogItems(int pageSize = 10, int pageIndex = 0, CatalogItemId[]? ids = null)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IList<CatalogItem>> GetCatalogItemsByBrand(CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0)
+    public Task<PaginatedItems<CatalogItem>> GetCatalogItemsByBrand(CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IList<CatalogItem>> GetCatalogItemsByType(CatalogTypeId typeId, int pageSize = 10, int pageIndex = 0)
+    public Task<PaginatedItems<CatalogItem>> GetCatalogItemsByType(CatalogTypeId typeId, int pageSize = 10, int pageIndex = 0)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IList<CatalogItem>> GetCatalogItemsByTypeAndBrand(CatalogTypeId typeId, CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0)
+    public Task<PaginatedItems<CatalogItem>> GetCatalogItemsByTypeAndBrand(CatalogTypeId typeId, CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IList<CatalogItem>> GetCatalogItemsWithName(string name, int pageSize = 10, int pageIndex = 0)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IList<CatalogType>> GetCatalogTypes()
+    public Task<PaginatedItems<CatalogItem>> GetCatalogItemsWithName(string name, int pageSize = 10, int pageIndex = 0)
     {
         throw new NotImplementedException();
     }
 
     public Task UpdateCatalogItem(CatalogItem old, CatalogItem newItem)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IList<CatalogType>> GetCatalogTypes()
     {
         throw new NotImplementedException();
     }

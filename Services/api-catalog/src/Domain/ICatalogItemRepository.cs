@@ -24,7 +24,7 @@ public interface ICatalogItemRepository
     /// <param name="pageIndex">Current page.</param>
     /// <param name="ids">Optional. List of ids.</param>
     /// <returns>List of CatalogItem.</returns>
-    Task<IList<CatalogItem>> GetCatalogItems(int pageSize = 10, int pageIndex = 0, CatalogItemId[]? ids = null);
+    Task<PaginatedItems<CatalogItem>> GetCatalogItems(int pageSize = 10, int pageIndex = 0, CatalogItemId[]? ids = null);
 
     /// <summary>
     /// Get a list of items that starts with the given name.
@@ -33,7 +33,7 @@ public interface ICatalogItemRepository
     /// <param name="pageSize">Items per page.</param>
     /// <param name="pageIndex">Current page.</param>
     /// <returns>List of CatalogItem.</returns>
-    Task<IList<CatalogItem>> GetCatalogItemsWithName(string name, int pageSize = 10, int pageIndex = 0);
+    Task<PaginatedItems<CatalogItem>> GetCatalogItemsWithName(string name, int pageSize = 10, int pageIndex = 0);
 
     /// <summary>
     /// Returns a list of items by brand.
@@ -42,7 +42,7 @@ public interface ICatalogItemRepository
     /// <param name="pageSize">Items per page.</param>
     /// <param name="pageIndex">Current page.</param>
     /// <returns>List of CatalogItem.</returns>
-    Task<IList<CatalogItem>> GetCatalogItemsByBrand(CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0);
+    Task<PaginatedItems<CatalogItem>> GetCatalogItemsByBrand(CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0);
 
     /// <summary>
     /// Returns a list of items by category.
@@ -51,7 +51,7 @@ public interface ICatalogItemRepository
     /// <param name="pageSize">Items per page.</param>
     /// <param name="pageIndex">Current page.</param>
     /// <returns></returns>
-    Task<IList<CatalogItem>> GetCatalogItemsByType(CatalogTypeId typeId, int pageSize = 10, int pageIndex = 0);
+    Task<PaginatedItems<CatalogItem>> GetCatalogItemsByType(CatalogTypeId typeId, int pageSize = 10, int pageIndex = 0);
 
     /// <summary>
     /// Returns a list of items by type id and brand id.
@@ -61,7 +61,7 @@ public interface ICatalogItemRepository
     /// <param name="pageSize">Items per page.</param>
     /// <param name="pageIndex">Current page.</param>
     /// <returns></returns>
-    Task<IList<CatalogItem>> GetCatalogItemsByTypeAndBrand(CatalogTypeId typeId, CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0);
+    Task<PaginatedItems<CatalogItem>> GetCatalogItemsByTypeAndBrand(CatalogTypeId typeId, CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0);
 
     /// <summary>
     /// Creates an item.
@@ -81,9 +81,9 @@ public interface ICatalogItemRepository
     /// <summary>
     /// Deletes an item from inventory.
     /// </summary>
-    /// <param name="itemId">Item id.</param>
-    /// <returns>Task.</returns>
-    Task DeleteCatalogItem(CatalogItemId itemId);
+    /// <param name="catalogItem">Item to be removed.</param>
+    /// <returns>void.</returns>
+    void DeleteCatalogItem(CatalogItem catalogItem);
 
     /// <summary>
     /// Get the available catalog brands.

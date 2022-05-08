@@ -1,8 +1,13 @@
-using System.Transactions;
 namespace Application.Services;
 
+/// <summary>
+/// Unit Of Work definitions.
+/// </summary>
 public interface IUnitOfWork : IDisposable
 {
-    Transaction BeginTransaction();
+    /// <summary>
+    /// Save changes asynchronously.
+    /// </summary>
+    /// <returns>The amount of affected rows.</returns>
     Task<int> SaveChangesAsync();
 }
