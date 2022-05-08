@@ -20,11 +20,9 @@ public interface ICatalogItemRepository
     /// <summary>
     /// Get items either paginated or by a list of ids.
     /// </summary>
-    /// <param name="pageSize">Items per page.</param>
-    /// <param name="pageIndex">Current page.</param>
     /// <param name="ids">Optional. List of ids.</param>
     /// <returns>List of CatalogItem.</returns>
-    Task<PaginatedItems<CatalogItem>> GetCatalogItems(int pageSize = 10, int pageIndex = 0, CatalogItemId[]? ids = null);
+    Task<List<CatalogItem>> GetCatalogItems(CatalogItemId[] ids);
 
     /// <summary>
     /// Get a list of items that starts with the given name.
@@ -36,24 +34,6 @@ public interface ICatalogItemRepository
     Task<PaginatedItems<CatalogItem>> GetCatalogItemsWithName(string name, int pageSize = 10, int pageIndex = 0);
 
     /// <summary>
-    /// Returns a list of items by brand.
-    /// </summary>
-    /// <param name="brandId">Brand id.</param>
-    /// <param name="pageSize">Items per page.</param>
-    /// <param name="pageIndex">Current page.</param>
-    /// <returns>List of CatalogItem.</returns>
-    Task<PaginatedItems<CatalogItem>> GetCatalogItemsByBrand(CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0);
-
-    /// <summary>
-    /// Returns a list of items by category.
-    /// </summary>
-    /// <param name="typeId">Type id.</param>
-    /// <param name="pageSize">Items per page.</param>
-    /// <param name="pageIndex">Current page.</param>
-    /// <returns></returns>
-    Task<PaginatedItems<CatalogItem>> GetCatalogItemsByType(CatalogTypeId typeId, int pageSize = 10, int pageIndex = 0);
-
-    /// <summary>
     /// Returns a list of items by type id and brand id.
     /// </summary>
     /// <param name="typeId">Type id.</param>
@@ -61,7 +41,7 @@ public interface ICatalogItemRepository
     /// <param name="pageSize">Items per page.</param>
     /// <param name="pageIndex">Current page.</param>
     /// <returns></returns>
-    Task<PaginatedItems<CatalogItem>> GetCatalogItemsByTypeAndBrand(CatalogTypeId typeId, CatalogBrandId brandId, int pageSize = 10, int pageIndex = 0);
+    Task<PaginatedItems<CatalogItem>> GetCatalogItemsByTypeAndBrand(CatalogTypeId? typeId = null, CatalogBrandId? brandId = null, int pageSize = 10, int pageIndex = 0);
 
     /// <summary>
     /// Creates an item.
