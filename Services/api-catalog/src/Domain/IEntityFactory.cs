@@ -30,6 +30,7 @@ public interface IEntityFactory
     /// <param name="name">Catalog item name.</param>
     /// <param name="description">Catalog item description.</param>
     /// <param name="price">Catalog item price.</param>
+    /// <param name="currency">Price currency.</param>
     /// <param name="availableStock">Amount of items on stock.</param>
     /// <param name="pictureName">Item picture.</param>
     /// <param name="pictureUri">Picture uri.</param>
@@ -43,6 +44,7 @@ public interface IEntityFactory
         string name,
         string description,
         decimal price,
+        string currency,
         int availableStock,
         string pictureName,
         string pictureUri,

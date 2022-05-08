@@ -1,5 +1,8 @@
 namespace Infrastructure.DataAccess.Configuration;
 
+/// <summary>
+/// Defines size limits for database text columns.
+/// </summary>
 public static class DbLimits
 {
     /// <summary>
