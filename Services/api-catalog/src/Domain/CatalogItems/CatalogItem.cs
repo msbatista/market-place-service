@@ -1,10 +1,14 @@
+using Domain.CatalogBrands;
+using Domain.CatalogTypes;
 using Domain.ValueObject;
 
 namespace Domain.CatalogItems;
 
+/// <summary>
+/// Represents a catalog item.
+/// </summary>
 public class CatalogItem : ICatalogItem
 {
-
     /// <summary>
     /// Catalog item constructor.
     /// </summary>
@@ -18,6 +22,8 @@ public class CatalogItem : ICatalogItem
     /// <param name="restockThreshold">Available stock at which we should reorder.</param>
     /// <param name="onReorder">Indicates if a item is in reorder.</param>
     /// <param name="maxStockThreshold">Maximum number of units that can be in-stock due to logistical/physical constraints in warehouse.</param>
+    /// <param name="catalogTypeId">Item type.</param>
+    /// <param name="catalogBrandId">Item brand.</param>
     public CatalogItem(
         CatalogItemId catalogItemId,
         string name,
@@ -28,7 +34,9 @@ public class CatalogItem : ICatalogItem
         string pictureUri,
         int restockThreshold,
         bool onReorder,
-        int maxStockThreshold)
+        int maxStockThreshold,
+        CatalogTypeId catalogTypeId,
+        CatalogBrandId catalogBrandId)
     {
         CatalogItemId = catalogItemId;
         Name = name;
@@ -40,6 +48,8 @@ public class CatalogItem : ICatalogItem
         RestockThreshold = restockThreshold;
         OnReorder = onReorder;
         MaxStockThreshold = maxStockThreshold;
+        CatalogTypeId = catalogTypeId;
+        CatalogBrandId = catalogBrandId;
     }
 
     /// <summary>
@@ -101,6 +111,18 @@ public class CatalogItem : ICatalogItem
     /// </summary>
     /// <value>int.</value>
     public int MaxStockThreshold { get; private set; }
+
+    /// <inheritdoc />
+    public CatalogBrandId CatalogBrandId { get; }
+
+    /// <inheritdoc />
+    public CatalogTypeId CatalogTypeId { get; }
+
+    /// <inheritdoc />
+    public CatalogBrand? CatalogBrand { get; set; }
+
+    /// <inheritdoc />
+    public CatalogType? CatalogType { get; set; }
 
     /// <inheritdoc/>
     public int AddStock(int quantityToBeAdded)
