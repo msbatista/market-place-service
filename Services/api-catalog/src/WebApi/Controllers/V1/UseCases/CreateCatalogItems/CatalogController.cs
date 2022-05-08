@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using Application.UseCases.CreateCatalogItems;
 using Application.UseCases.CreateCatalogItems.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,8 @@ namespace WebApi.Controllers.V1.UseCases.CreateCatalogItems;
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
-public class CatalogController : ControllerBase
+[Produces(MediaTypeNames.Application.Json )]
+public sealed class CatalogController : ControllerBase
 {
     private readonly ICreateCatalogItemUseCase _useCase;
     private readonly ILogger<CatalogController> _logger;

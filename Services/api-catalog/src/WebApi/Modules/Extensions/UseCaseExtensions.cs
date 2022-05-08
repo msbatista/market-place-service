@@ -1,4 +1,5 @@
 using Application.UseCases.CreateCatalogItems;
+using Application.UseCases.GetCatalogItemById;
 
 namespace WebApi.Modules.Extensions;
 
@@ -15,6 +16,7 @@ public static class UseCaseExtensions
     public static IServiceCollection AddUseCases(this IServiceCollection services)
     {
         services.AddScoped<ICreateCatalogItemUseCase, CreateCatalogItemUseCase>();
+        services.AddScoped<IGetCatalogItemByIdUseCase, GetCatalogItemByIdUseCase>();
 
         return services;
     }
