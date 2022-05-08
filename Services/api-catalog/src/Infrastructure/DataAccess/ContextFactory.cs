@@ -36,7 +36,7 @@ public sealed class ContextFactory : IDesignTimeDbContextFactory<CatalogContext>
             .AddEnvironmentVariables()
             .Build();
 
-        string connectionString = configuration.GetValue<string>("ConnectionStrings__CatalogApiDb");
+        string connectionString = configuration.GetValue<string>("ConnectionStrings__CatalogDb");
         return connectionString;
     }
 }

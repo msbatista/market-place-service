@@ -1,0 +1,25 @@
+ 
+version: '3' 
+
+services:
+  sql_server:
+    container_name: catalog-db
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=catalog1234
+    ports:
+      - 6433:1433
+
+  portainer:
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock
+    ports:
+      - 9001:9000
+      - 8000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+  portainer_data:
