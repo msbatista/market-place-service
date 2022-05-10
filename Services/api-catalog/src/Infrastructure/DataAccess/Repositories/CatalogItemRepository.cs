@@ -105,12 +105,9 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
             .CatalogItems
             .Where(c => c.Name.StartsWith(name));
 
-        var count = await _context
-            .CatalogItems
-            .LongCountAsync();
+        var count = await baseQuery.LongCountAsync();
 
-        var items = await _context
-            .CatalogItems
+        var items = await baseQuery
             .Skip(pageSize * pageIndex)
             .Take(pageSize)
             .ToListAsync();
