@@ -1,4 +1,5 @@
 using Application.UseCases.CreateCatalogItems;
+using Application.UseCases.DeleteCatalogItem;
 using Application.UseCases.GetCatalogItemById;
 using Application.UseCases.GetCatalogItemsByTypeAndBrand;
 using Application.UseCases.GetCatalogItemsWithName;
@@ -21,7 +22,8 @@ public static class UseCaseExtensions
         services.AddScoped<IGetCatalogItemByIdUseCase, GetCatalogItemByIdUseCase>();
         services.AddScoped<IGetCatalogItemsByTypeAndBrandUseCase, GetCatalogItemsByTypeAndBrandUseCase>();
         services.AddScoped<IGetCatalogItemsWithNameUseCase, GetCatalogItemsWithNameUseCase>();
-        
+        services.AddScoped<IDeleteItemUseCase, DeleteItemUseCase>();
+
         return services;
     }
 }
