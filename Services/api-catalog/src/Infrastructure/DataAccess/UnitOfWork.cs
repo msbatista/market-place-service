@@ -23,6 +23,13 @@ public sealed class UnitOfWork : IUnitOfWork
         return affectedRows;
     }
 
+    public int SaveChanges()
+    {
+        var affectedRows = _context.SaveChanges();
+
+        return affectedRows;
+    }
+
     private void Dispose(bool disposing)
     {
         if (!_disposed && disposing)

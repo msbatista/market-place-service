@@ -40,7 +40,7 @@ public class DeleteItemUseCase : IDeleteItemUseCase
         if (foundItem is CatalogItem catalogItem)
         {
             _catalogItemRepository.DeleteCatalogItem(catalogItem);
-            var affectedRows = _uow.SaveChangesAsync();
+            var affectedRows = await _uow.SaveChangesAsync();
 
             _logger.LogInformation("A total of {affectedRows} where affected.", affectedRows);
 

@@ -10,4 +10,10 @@ public interface IUnitOfWork : IDisposable
     /// </summary>
     /// <returns>The amount of affected rows.</returns>
     Task<int> SaveChangesAsync();
+
+    /// <summary>
+    /// Save changes.
+    /// </summary>
+    /// <returns>The amount of affected rows.</returns>
+    int SaveChanges();
 }
