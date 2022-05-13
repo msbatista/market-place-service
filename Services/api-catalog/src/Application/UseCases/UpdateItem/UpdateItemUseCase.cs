@@ -26,9 +26,9 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
     /// <param name="catalogItemRepository">Catalog repository.</param>
     /// <param name="logger">Logger.</param>
     public UpdateItemUseCase(
-        IUnitOfWork uow, 
+        IUnitOfWork uow,
         IEntityFactory entityFactory,
-        ICatalogItemRepository catalogItemRepository, 
+        ICatalogItemRepository catalogItemRepository,
         ILogger<UpdateItemUseCase> logger)
     {
         _uow = uow;
@@ -44,10 +44,23 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
 
         ICatalogItem? foundItem = await _catalogItemRepository.GetCatalogItemById(new CatalogItemId(id));
 
-        if (foundItem is CatalogItem item)
+        if (foundItem is not CatalogItem)
         {
-            var newItem = this.createItemCatalog(catalogItem);
+            _logger.LogError("Not able to find item with {id}", id);
 
+            throw new ObjectNotFoundException($"Not able to find item with {id}");
+        }
+
+        var item = (CatalogItem)foundItem;
+
+        var newItem = this.createItemCatalog(catalogItem);
+
+        if (item.Price != newItem.Price)
+        {
+            // TODO: If price is different publish the item into a queue and database by using atomic transaction strategy.
+        }
+        else
+        {
             item = newItem;
 
             _catalogItemRepository.UpdateCatalogItem(item);
@@ -56,10 +69,6 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
 
             _logger.LogInformation("Item with Id: '{id}'. Affected rows: {affectedRows}", id, affectedRows);
         }
-
-        _logger.LogError("Not able to find item with {id}", id);
-
-        throw new ObjectNotFoundException($"Not able to find item with {id}");
     }
 
     private CatalogItem createItemCatalog(CatalogItemModel catalogItem)

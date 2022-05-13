@@ -39,7 +39,7 @@ public sealed class CatalogController : ControllerBase
     [HttpGet("items/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItem))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetailsModel))]
-    public async Task<IActionResult> GetItemById([FromRoute] Guid id) 
+    public async Task<IActionResult> Get([FromRoute] Guid id) 
     {
         _logger.LogInformation("Getting item by id.");
 
