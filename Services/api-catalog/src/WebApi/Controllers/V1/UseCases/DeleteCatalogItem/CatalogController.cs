@@ -27,7 +27,7 @@ public class CatalogController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns>IActionResult.</returns>
-    [HttpDelete("items/id/{id}")]
+    [HttpDelete("items/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetailsModel))]
     public async Task<IActionResult> Delete([FromRoute] Guid id) 

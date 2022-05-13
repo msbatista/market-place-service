@@ -1,4 +1,4 @@
-using Application.UseCases.CreateCatalogItems.Model;
+using Application.UseCases.Model;
 using Domain.CatalogItems;
 
 namespace Application.UseCases.CreateCatalogItems;

@@ -1,4 +1,4 @@
-namespace Application.UseCases.CreateCatalogItems.Model;
+namespace Application.UseCases.Model;
 
 /// <summary>
 /// Create item mode.

@@ -1,10 +1,11 @@
 using System.Net.Mime;
-using Application.UseCases.GetCatalogItemById;
+using Application.UseCases.CreateCatalogItems;
+using Application.UseCases.Model;
+using Application.UseCases.UpdateItem;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.ViewModels;
 using WebApi.ViewModels.ValidationModels;
 
-namespace WebApi.Controllers.V1.UseCases.GetCatalogItemById;
+namespace WebApi.Controllers.V1.UseCases.UpdateItem;
 
 /// <summary>
 /// Catalog controller.
@@ -15,7 +16,7 @@ namespace WebApi.Controllers.V1.UseCases.GetCatalogItemById;
 [Produces(MediaTypeNames.Application.Json )]
 public sealed class CatalogController : ControllerBase
 {
-    private readonly IGetCatalogItemByIdUseCase _useCase;
+    private readonly IUpdateItemUseCase _useCase;
     private readonly ILogger<CatalogController> _logger;
 
     /// <summary>
@@ -23,28 +24,25 @@ public sealed class CatalogController : ControllerBase
     /// </summary>
     /// <param name="useCase"></param>
     /// <param name="logger"></param>
-    public CatalogController(
-        IGetCatalogItemByIdUseCase useCase, 
-        ILogger<CatalogController> logger)
+    public CatalogController(IUpdateItemUseCase useCase, ILogger<CatalogController> logger)
     {
         _useCase = useCase;
         _logger = logger;
     }
 
     /// <summary>
-    /// Get an item by id.
+    /// Updates a item into inventory.
     /// </summary>
     /// <param name="id"></param>
+    /// <param name="catalogItemModel"></param>
     /// <returns>IActionResult.</returns>
-    [HttpGet("items/{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItemViewModel))]
+    [HttpPut("items/{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetailsModel))]
-    public async Task<IActionResult> GetItemById([FromRoute] Guid id) 
+    public async Task<IActionResult> CreateItemAsync([FromRoute] Guid id, [FromBody] CatalogItemModel catalogItemModel)
     {
-        _logger.LogInformation("Getting item by id.");
+        await _useCase.Execute(id, catalogItemModel);
 
-        var item = await _useCase.Execute(id);
-
-        return Ok(new CatalogItemViewModel(item));
+        return NoContent();
     }
 }

@@ -60,35 +60,85 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
     }
 
     /// <inheritdoc />
-    public async Task<List<CatalogItem>> GetCatalogItems(CatalogItemId[] ids)
+    public async Task<PaginatedItems<CatalogItem>> GetCatalogItems(
+        CatalogItemId[]? ids,         
+        int pageSize = 10,
+        int pageIndex = 0)
     {
-
-        return await _context
+        var baseQuery = _context
             .CatalogItems
-            .Where(c => ids.Contains(c.CatalogItemId))
+            .AsQueryable();
+
+        if (ids != null && ids.Any())
+        {
+            baseQuery = baseQuery
+                .Where(c => ids.Contains(c.CatalogItemId));
+        }
+
+        var count = await baseQuery.LongCountAsync();
+
+        var items = await baseQuery
+            .Skip(pageSize * pageIndex)
+            .Take(pageSize)
             .ToListAsync();
+
+        return new PaginatedItems<CatalogItem>(pageSize, pageIndex, count, items);
     }
 
     /// <inheritdoc />
     public async Task<PaginatedItems<CatalogItem>> GetCatalogItemsByTypeAndBrand(
-        CatalogTypeId? typeId = null,
-        CatalogBrandId? brandId = null,
+        CatalogTypeId typeId,
+        CatalogBrandId brandId,
         int pageSize = 10,
         int pageIndex = 0)
     {
-        var baseQuery = _context.CatalogItems.AsQueryable();
-
-        if (typeId is CatalogTypeId itemType)
-        {
-            baseQuery = baseQuery.Where(c => c.CatalogTypeId == itemType);
-        }
-
-        if (brandId is CatalogBrandId itemBrand)
-        {
-            baseQuery = baseQuery.Where(c => c.CatalogBrandId == itemBrand);
-        }
+        var baseQuery = _context
+            .CatalogItems
+            .Where(c => c.CatalogTypeId == typeId && c.CatalogBrandId == brandId);
 
         var count = await baseQuery.LongCountAsync();
+
+        var items = await baseQuery
+            .Skip(pageSize * pageIndex)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return new PaginatedItems<CatalogItem>(pageSize, pageIndex, count, items);
+    }
+
+    /// <inheritdoc />
+    public async Task<PaginatedItems<CatalogItem>> GetCatalogItemsByBrand(
+        CatalogBrandId brandId,
+        int pageSize = 10,
+        int pageIndex = 0)
+    {
+        var baseQuery = _context
+            .CatalogItems
+            .Where(c => c.CatalogBrandId == brandId);
+
+
+        var count = await baseQuery.LongCountAsync();
+
+        var items = await baseQuery
+            .Skip(pageSize * pageIndex)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return new PaginatedItems<CatalogItem>(pageSize, pageIndex, count, items);
+    }
+
+    /// <inheritdoc />
+    public async Task<PaginatedItems<CatalogItem>> GetCatalogItemsByType(
+        CatalogTypeId typeId,
+        int pageSize = 10,
+        int pageIndex = 0)
+    {
+        var baseQuery = _context
+            .CatalogItems
+            .Where(c => c.CatalogTypeId == typeId);
+
+        var count = await baseQuery
+            .LongCountAsync();
 
         var items = await baseQuery
             .Skip(pageSize * pageIndex)

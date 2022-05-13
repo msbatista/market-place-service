@@ -1,8 +1,12 @@
 using Application.UseCases.CreateCatalogItems;
 using Application.UseCases.DeleteCatalogItem;
+using Application.UseCases.GetCatalogBrands;
 using Application.UseCases.GetCatalogItemById;
+using Application.UseCases.GetCatalogItems;
 using Application.UseCases.GetCatalogItemsByTypeAndBrand;
 using Application.UseCases.GetCatalogItemsWithName;
+using Application.UseCases.GetCatalogTypes;
+using Application.UseCases.UpdateItem;
 
 namespace WebApi.Modules.Extensions;
 
@@ -23,6 +27,10 @@ public static class UseCaseExtensions
         services.AddScoped<IGetCatalogItemsByTypeAndBrandUseCase, GetCatalogItemsByTypeAndBrandUseCase>();
         services.AddScoped<IGetCatalogItemsWithNameUseCase, GetCatalogItemsWithNameUseCase>();
         services.AddScoped<IDeleteItemUseCase, DeleteItemUseCase>();
+        services.AddScoped<IUpdateItemUseCase, UpdateItemUseCase>();
+        services.AddScoped<IGetCatalogItemsUseCase, GetCatalogItemsUseCase>();
+        services.AddScoped<IGetCatalogTypesUseCase, GetCatalogTypesUseCase>();
+        services.AddScoped<IGetCatalogBrandsUseCase, GetCatalogBrandsUseCase>();
 
         return services;
     }

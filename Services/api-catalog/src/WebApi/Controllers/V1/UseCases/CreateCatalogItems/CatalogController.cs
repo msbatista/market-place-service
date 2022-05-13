@@ -1,6 +1,6 @@
 using System.Net.Mime;
 using Application.UseCases.CreateCatalogItems;
-using Application.UseCases.CreateCatalogItems.Model;
+using Application.UseCases.Model;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.ViewModels;
 using WebApi.ViewModels.ValidationModels;
@@ -35,7 +35,7 @@ public sealed class CatalogController : ControllerBase
     /// </summary>
     /// <param name="catalogItemModel"></param>
     /// <returns>IActionResult.</returns>
-    [HttpPost]
+    [HttpPost("items")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CatalogItemViewModel))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetailsModel))]
     public async Task<IActionResult> CreateItemAsync([FromBody] CatalogItemModel catalogItemModel)

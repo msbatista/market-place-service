@@ -1,33 +1,35 @@
+using Application.Exceptions;
 using Application.Services;
 using Application.UseCases.Model;
 using Domain;
 using Domain.CatalogItems;
+using Domain.ValueObject;
 using Microsoft.Extensions.Logging;
 
-namespace Application.UseCases.CreateCatalogItems;
+namespace Application.UseCases.UpdateItem;
 
 /// <summary>
-/// Persists a catalog item into the inventory.
+/// Update a catalog item into the inventory.
 /// </summary>
-public sealed class CreateCatalogItemUseCase : ICreateCatalogItemUseCase
+public sealed class UpdateItemUseCase : IUpdateItemUseCase
 {
     private readonly IUnitOfWork _uow;
     private readonly IEntityFactory _entityFactory;
     private readonly ICatalogItemRepository _catalogItemRepository;
-    private readonly ILogger<CreateCatalogItemUseCase> _logger;
+    private readonly ILogger<UpdateItemUseCase> _logger;
 
     /// <summary>
-    /// Initializes an instance of CreateCatalogItemUseCase.
+    /// Initializes an instance of UpdateItemUseCase.
     /// </summary>
     /// <param name="uow">Unit of work.</param>
     /// <param name="entityFactory">Factory of objects.</param>
     /// <param name="catalogItemRepository">Catalog repository.</param>
     /// <param name="logger">Logger.</param>
-    public CreateCatalogItemUseCase(
+    public UpdateItemUseCase(
         IUnitOfWork uow, 
         IEntityFactory entityFactory,
         ICatalogItemRepository catalogItemRepository, 
-        ILogger<CreateCatalogItemUseCase> logger)
+        ILogger<UpdateItemUseCase> logger)
     {
         _uow = uow;
         _entityFactory = entityFactory;
@@ -36,19 +38,28 @@ public sealed class CreateCatalogItemUseCase : ICreateCatalogItemUseCase
     }
 
     /// <inheritdoc />
-    public async Task<CatalogItem> Execute(CatalogItemModel catalogItem)
+    public async Task Execute(Guid id, CatalogItemModel catalogItem)
     {
-        _logger.LogInformation("Inseting product into database.");
+        _logger.LogInformation("Updating catalog item.");
 
-        var item = createItemCatalog(catalogItem);
+        ICatalogItem? foundItem = await _catalogItemRepository.GetCatalogItemById(new CatalogItemId(id));
 
-        await _catalogItemRepository.CreateCatalogItem(item);
+        if (foundItem is CatalogItem item)
+        {
+            var newItem = this.createItemCatalog(catalogItem);
 
-        var affectedRows = await _uow.SaveChangesAsync();
+            item = newItem;
 
-        _logger.LogInformation("Created item with id '{CatalogItemId}'. Affected rows: {affectedRows}", item.CatalogItemId, affectedRows);
+            _catalogItemRepository.UpdateCatalogItem(item);
 
-        return item;
+            var affectedRows = await _uow.SaveChangesAsync();
+
+            _logger.LogInformation("Item with Id: '{id}'. Affected rows: {affectedRows}", id, affectedRows);
+        }
+
+        _logger.LogError("Not able to find item with {id}", id);
+
+        throw new ObjectNotFoundException($"Not able to find item with {id}");
     }
 
     private CatalogItem createItemCatalog(CatalogItemModel catalogItem)
