@@ -1,7 +1,7 @@
 using System.Net.Mime;
 using Application.UseCases.GetCatalogItemById;
+using Domain.CatalogItems;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.ViewModels;
 using WebApi.ViewModels.ValidationModels;
 
 namespace WebApi.Controllers.V1.UseCases.GetCatalogItemById;
@@ -37,7 +37,7 @@ public sealed class CatalogController : ControllerBase
     /// <param name="id"></param>
     /// <returns>IActionResult.</returns>
     [HttpGet("items/{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItemViewModel))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItem))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetailsModel))]
     public async Task<IActionResult> GetItemById([FromRoute] Guid id) 
     {
@@ -45,6 +45,6 @@ public sealed class CatalogController : ControllerBase
 
         var item = await _useCase.Execute(id);
 
-        return Ok(new CatalogItemViewModel(item));
+        return Ok(item);
     }
 }

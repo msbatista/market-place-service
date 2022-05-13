@@ -2,9 +2,9 @@ using Domain;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Domain.CatalogItems;
-using Application.UseCases.GetCatalogItems;
+using Application.UseCases.GetCatalogItemsByType;
 
-namespace WebApi.Controllers.V1.UseCases.GetCatalogItems;
+namespace WebApi.Controllers.V1.UseCases.GetCatalogItemsByType;
 
 /// <summary>
 /// Catalog controller.
@@ -15,31 +15,31 @@ namespace WebApi.Controllers.V1.UseCases.GetCatalogItems;
 [Produces(MediaTypeNames.Application.Json)]
 public class CatalogController : ControllerBase
 {
-    private readonly IGetCatalogItemsUseCase _useCase;
+    private readonly IGetCatalogItemsByTypeUseCase _useCase;
 
     /// <summary>
     /// Initializes an instance of CatalogController.
     /// </summary>
     /// <param name="useCase"></param>
-    public CatalogController(IGetCatalogItemsUseCase useCase) => _useCase = useCase;
+    public CatalogController(IGetCatalogItemsByTypeUseCase useCase) => _useCase = useCase;
 
 
     /// <summary>
-    /// Get items by type and brand.
+    /// Get items by type.
     /// </summary>
-    /// <param name="ids"></param>
+    /// <param name="typeId"></param>
     /// <param name="pageSize"></param>
     /// <param name="pageIndex"></param>
     /// <returns>IActionResult.</returns>
-    [HttpGet("items")]
+    [HttpGet("items/type/{typeId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedItems<CatalogItem>))]
     public async Task<IActionResult> Get(
-        [FromRoute] string ids,
+        [FromRoute] Guid typeId,
         [FromQuery] int pageSize = 10,
         [FromQuery] int pageIndex = 0)
     {
 
-        var items = await _useCase.Execute(ids, pageSize, pageIndex);
+        var items = await _useCase.Execute(typeId, pageSize, pageIndex);
 
         return Ok(items);
     }

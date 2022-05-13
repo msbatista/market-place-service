@@ -3,6 +3,8 @@ using Application.UseCases.DeleteCatalogItem;
 using Application.UseCases.GetCatalogBrands;
 using Application.UseCases.GetCatalogItemById;
 using Application.UseCases.GetCatalogItems;
+using Application.UseCases.GetCatalogItemsByBrand;
+using Application.UseCases.GetCatalogItemsByType;
 using Application.UseCases.GetCatalogItemsByTypeAndBrand;
 using Application.UseCases.GetCatalogItemsWithName;
 using Application.UseCases.GetCatalogTypes;
@@ -31,6 +33,8 @@ public static class UseCaseExtensions
         services.AddScoped<IGetCatalogItemsUseCase, GetCatalogItemsUseCase>();
         services.AddScoped<IGetCatalogTypesUseCase, GetCatalogTypesUseCase>();
         services.AddScoped<IGetCatalogBrandsUseCase, GetCatalogBrandsUseCase>();
+        services.AddScoped<IGetCatalogItemsByTypeUseCase, GetCatalogItemsByTypeUseCase>();
+        services.AddScoped<IGetCatalogItemsByBrandUseCase, GetCatalogItemsByBrandUseCase>();
 
         return services;
     }
