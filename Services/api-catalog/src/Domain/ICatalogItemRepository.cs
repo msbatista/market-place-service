@@ -75,9 +75,10 @@ public interface ICatalogItemRepository
     /// <summary>
     /// Updates an item.
     /// </summary>
+    /// <param name="oldItem">Old item.</param>
     /// <param name="newItem">New item.</param>
     /// <returns>Task.</returns>
-    void UpdateCatalogItem(CatalogItem newItem);
+    void UpdateCatalogItem(CatalogItem oldItem, CatalogItem newItem);
 
     /// <summary>
     /// Deletes an item from inventory.

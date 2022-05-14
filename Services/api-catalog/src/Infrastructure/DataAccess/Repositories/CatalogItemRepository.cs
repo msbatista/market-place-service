@@ -166,8 +166,10 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
     }
 
     /// <inheritdoc />
-    public void UpdateCatalogItem(CatalogItem newItem)
+    public void UpdateCatalogItem(CatalogItem oldItem, CatalogItem newItem)
     {
+        _context.Entry(oldItem).State = EntityState.Detached;
+        _context.Entry(newItem).State = EntityState.Modified;
         _context.CatalogItems.Update(newItem);
     }
 

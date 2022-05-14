@@ -1,6 +1,7 @@
 using Application.Exceptions;
 using Application.Services;
 using Application.UseCases.Model;
+using BuildingBlocks.Modules.Extensions;
 using Domain;
 using Domain.CatalogItems;
 using Domain.ValueObject;
@@ -53,27 +54,21 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
 
         var item = (CatalogItem)foundItem;
 
-        var newItem = this.createItemCatalog(catalogItem);
+        var newItem = this.createItemCatalog(id, catalogItem);
 
-        if (item.Price != newItem.Price)
-        {
-            // TODO: If price is different publish the item into a queue and database by using atomic transaction strategy.
-        }
-        else
-        {
-            item = newItem;
+        // TODO: If price is different publish the item into a queue and database by using atomic transaction strategy.
 
-            _catalogItemRepository.UpdateCatalogItem(item);
+        _catalogItemRepository.UpdateCatalogItem(item, newItem);
 
-            var affectedRows = await _uow.SaveChangesAsync();
+        var affectedRows = await _uow.SaveChangesAsync();
 
-            _logger.LogInformation("Item with Id: '{id}'. Affected rows: {affectedRows}", id, affectedRows);
-        }
+        _logger.LogInformation("Item with Id: '{id}'. Affected rows: {affectedRows}", id, affectedRows);
     }
 
-    private CatalogItem createItemCatalog(CatalogItemModel catalogItem)
+    private CatalogItem createItemCatalog(Guid id, CatalogItemModel catalogItem)
     {
-        return _entityFactory.NewCatalogItem(
+        return new CatalogItem(
+            new(id),
             catalogItem.Name,
             catalogItem.Description,
             catalogItem.Value,
@@ -84,9 +79,9 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
             catalogItem.RestockThreshold,
             catalogItem.OnReorder,
             catalogItem.MaxStockThreshold,
-            catalogItem.PictureAsBase64,
-            catalogItem.CatalogTypeId,
-            catalogItem.CatalogBrandId
+            catalogItem.PictureAsBase64?.AsByteArray(),
+            new(catalogItem.CatalogTypeId),
+            new(catalogItem.CatalogBrandId)
         );
     }
 }
