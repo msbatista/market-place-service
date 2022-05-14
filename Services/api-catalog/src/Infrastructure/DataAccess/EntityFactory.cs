@@ -1,3 +1,4 @@
+using BuildingBlocks.Modules.Extensions;
 using Domain;
 using Domain.CatalogBrands;
 using Domain.CatalogItems;
@@ -22,7 +23,8 @@ public sealed class EntityFactory : IEntityFactory
         string pictureUri, 
         int restockThreshold, 
         bool onReorder,
-        int maxStockThreshold, 
+        int maxStockThreshold,
+        string? pictureAsBase64,
         Guid catalogTypeId, 
         Guid catalogBrandId)
         => new(
@@ -37,6 +39,7 @@ public sealed class EntityFactory : IEntityFactory
             restockThreshold,
             onReorder,
             maxStockThreshold,
+            pictureAsBase64?.AsByteArray(),
             new(catalogTypeId),
             new(catalogBrandId));
 

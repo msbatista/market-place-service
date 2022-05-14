@@ -31,6 +31,7 @@ public sealed record CatalogItemModel
         int restockThreshold,
         bool onReorder,
         int maxStockThreshold,
+        string? pictureAsBase64,
         Guid catalogTypeId,
         Guid catalogBrandId)
     {
@@ -44,6 +45,7 @@ public sealed record CatalogItemModel
         RestockThreshold = restockThreshold;
         OnReorder = onReorder;
         MaxStockThreshold = maxStockThreshold;
+        PictureAsBase64 = pictureAsBase64;
         CatalogTypeId = catalogTypeId;
         CatalogBrandId = catalogBrandId;
     }
@@ -121,4 +123,10 @@ public sealed record CatalogItemModel
     /// </summary>
     /// <value>Guid.</value>
     public Guid CatalogBrandId { get; init; }
+
+    /// <summary>
+    /// Get or inits PictureAsBase64.
+    /// </summary>
+    /// <value>string.</value>
+    public string? PictureAsBase64 { get; init; }
 }

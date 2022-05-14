@@ -55,6 +55,7 @@ public sealed class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogI
             .IsRequired();
 
         builder.Ignore(c => c.Price);
+        builder.Ignore(c => c.PictureBase64);
         
         builder.Property(c => c.Currency)
             .HasMaxLength(DbLimits.TINIER_TEXT)
@@ -84,6 +85,10 @@ public sealed class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogI
             .IsRequired();
 
         builder.Property(c => c.MaxStockThreshold)
+            .UsePropertyAccessMode(PropertyAccessMode.FieldDuringConstruction)
+            .IsRequired();
+
+        builder.Property(c => c.Picture)
             .UsePropertyAccessMode(PropertyAccessMode.FieldDuringConstruction)
             .IsRequired();
 

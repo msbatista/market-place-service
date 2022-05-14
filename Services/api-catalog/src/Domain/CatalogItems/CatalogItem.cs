@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+using BuildingBlocks.Modules.Extensions;
 using Domain.CatalogBrands;
 using Domain.CatalogTypes;
 using Domain.ValueObject;
@@ -37,6 +39,7 @@ public class CatalogItem : ICatalogItem
         int restockThreshold,
         bool onReorder,
         int maxStockThreshold,
+        byte[]? picture,
         CatalogTypeId catalogTypeId,
         CatalogBrandId catalogBrandId)
     {
@@ -54,6 +57,7 @@ public class CatalogItem : ICatalogItem
         CatalogBrandId = catalogBrandId;
         Value = value;
         Currency = currency;
+        Picture = picture;
     }
 
     /// <summary>
@@ -139,6 +143,15 @@ public class CatalogItem : ICatalogItem
 
     /// <inheritdoc />
     public CatalogType? CatalogType { get; set; }
+
+    public string PictureBase64 => Picture?.AsString() ?? "";
+
+    /// <summary>
+    /// Picture.
+    /// </summary>
+    /// <value>byte[]</value>
+    [JsonIgnore]
+    public byte[]? Picture { get; set; }
 
     /// <inheritdoc/>
     public int AddStock(int quantityToBeAdded)

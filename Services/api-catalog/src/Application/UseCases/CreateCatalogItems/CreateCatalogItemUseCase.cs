@@ -64,6 +64,7 @@ public sealed class CreateCatalogItemUseCase : ICreateCatalogItemUseCase
             catalogItem.RestockThreshold,
             catalogItem.OnReorder,
             catalogItem.MaxStockThreshold,
+            catalogItem.PictureAsBase64,
             catalogItem.CatalogTypeId,
             catalogItem.CatalogBrandId
         );

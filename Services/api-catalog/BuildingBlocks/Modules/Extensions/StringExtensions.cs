@@ -1,5 +1,6 @@
 using System.Text;
-namespace Infrastructure.Modules.Extensions;
+
+namespace BuildingBlocks.Modules.Extensions;
 
 /// <summary>
 /// StringExtensions.
