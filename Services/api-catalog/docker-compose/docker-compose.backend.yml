@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        - CONFIGURATION=Release
+    environment:
+      - ASPNETCORE_ENVIROMENT=Production
+      - ASPNETCORE_URLS=http://*:5000
+      - ConnectionStrings__CatalogDb=Server=sql_server,1433;Database=catalog-db;User Id=sa;Password=aJBuS&8Q^bJ5;
+    ports:
+      - 5000:5000
+    depends_on:
+      - sql_server
+      - api_seed
+    volumes:
+      - ../.docker/https:/https:ro
+
+  api_seed:
+    build:
+      context: ../
+      dockerfile: ./api-seed/Dockerfile
+    environment:
+      - ConnectionStrings__CatalogDb=Server=sql_server,1433;Database=catalog-db;User Id=sa;Password=aJBuS&8Q^bJ5;
+    command: bash -c "/root/.dotnet/tools/dotnet-ef database update --project src/Infrastructure --startup-project src/WebApi"
+    depends_on:
+      - sql_server
+
+  sql_server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=aJBuS&8Q^bJ5
+    ports:
+      - 6433:1433
+    

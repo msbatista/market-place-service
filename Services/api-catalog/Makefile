@@ -3,7 +3,6 @@ APP_NAME := catalog-api
 TAG := v1
 # ACR_REGISTRY := arclabtest
 
-
 add_migration:
 	@dotnet ef migrations add $(name) --project ./src/Infrastructure/ --startup-project ./src/WebApi/
 
@@ -36,3 +35,15 @@ docker_run:
 
 acr_build_and_push:
 	@az acr build --image "$(APP_NAME):$(TAG)" --registry $(ACR_REGISTRY) --file Dockerfile .
+
+install_aks_cli:
+	@az aks install-cli
+
+aks_get_credentials:
+	@az aks get-credentials --resource-group $(RESOURCE_GROUP) --name $(AKS_CLUSTER)
+
+aks_get_nodes:
+	@kubectl get nodes
+
+run_backend:
+	@docker-compose -f ./docker-compose/docker-compose.backend.yml up --force-recreate --build -d
