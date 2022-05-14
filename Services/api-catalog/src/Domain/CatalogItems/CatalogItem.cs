@@ -64,7 +64,7 @@ public class CatalogItem : ICatalogItem
     /// Gets CatalogItemId.
     /// </summary>
     /// <value>CatalogItemId.</value>
-    public CatalogItemId CatalogItemId { get; set; }
+    public CatalogItemId CatalogItemId { get; }
 
     /// <summary>
     /// Gets item name.
@@ -133,10 +133,10 @@ public class CatalogItem : ICatalogItem
     public int MaxStockThreshold { get; set; }
 
     /// <inheritdoc />
-    public CatalogBrandId CatalogBrandId { get; set; }
+    public CatalogBrandId CatalogBrandId { get; }
 
     /// <inheritdoc />
-    public CatalogTypeId CatalogTypeId { get; set; }
+    public CatalogTypeId CatalogTypeId { get; }
 
     /// <inheritdoc />
     public CatalogBrand? CatalogBrand { get; set; }
