@@ -12,7 +12,7 @@ public static class DbLimits
     /// <summary>
     /// Represents a text of 32 characters.
     /// </summary>
-    public static readonly int TINY_TEXT = 32;
+    public static readonly int TINY_TEXT = 255;
     /// <summary>
     /// Represents a text of 3072 characters.
     /// </summary>
