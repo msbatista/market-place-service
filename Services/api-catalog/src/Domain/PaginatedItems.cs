@@ -20,6 +20,7 @@ public sealed class PaginatedItems<TEntity> where TEntity : class
         this.PageIndex = pageIndex;
         this.Count = count;
         this.Data = data;
+        this.TotalPages = (long)Math.Ceiling((this.Count / ((decimal)this.PageSize)));
     }
 
     /// <summary>
@@ -45,4 +46,10 @@ public sealed class PaginatedItems<TEntity> where TEntity : class
     /// </summary>
     /// <value>long.</value>
     public long Count { get; }
+
+    /// <summary>
+    /// Total number of pages.
+    /// </summary>
+    /// <value>long.</value>
+    public long TotalPages { get; }
 }
