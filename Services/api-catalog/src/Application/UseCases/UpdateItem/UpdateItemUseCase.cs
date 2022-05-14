@@ -15,7 +15,6 @@ namespace Application.UseCases.UpdateItem;
 public sealed class UpdateItemUseCase : IUpdateItemUseCase
 {
     private readonly IUnitOfWork _uow;
-    private readonly IEntityFactory _entityFactory;
     private readonly ICatalogItemRepository _catalogItemRepository;
     private readonly ILogger<UpdateItemUseCase> _logger;
 
@@ -23,7 +22,6 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
     /// Initializes an instance of UpdateItemUseCase.
     /// </summary>
     /// <param name="uow">Unit of work.</param>
-    /// <param name="entityFactory">Factory of objects.</param>
     /// <param name="catalogItemRepository">Catalog repository.</param>
     /// <param name="logger">Logger.</param>
     public UpdateItemUseCase(
@@ -33,7 +31,6 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
         ILogger<UpdateItemUseCase> logger)
     {
         _uow = uow;
-        _entityFactory = entityFactory;
         _catalogItemRepository = catalogItemRepository;
         _logger = logger;
     }
