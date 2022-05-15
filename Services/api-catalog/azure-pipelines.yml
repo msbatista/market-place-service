@@ -1,0 +1,40 @@
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  imageName: catalog-api
+  tag: latest
+  containerRegistryServicePrincipal: arc-test-lab-dev
+
+jobs:
+  - job: catalog-api
+    displayName: build and publish catalog api into container register
+    steps:
+      - checkout: selft
+
+      - bash: make build;
+        displayName: dotnet build
+
+      - bash: make unit_tests
+        displayName: run unit tests
+
+      - bash: make e2e
+        displayName: run end to end tests
+
+      - bash: make integration_tests
+        displayName: run integration tests
+
+      - bash: make component tests
+        displayName: run component tests
+      
+      - task: Docker@2
+        displayName: docker build -t "$(imageName):$(tag)"
+        inputs:
+          repository: $(imageName)
+          command: buildAndPush
+          tags: $(latest)
+          Dockerfile: Dockerfile
+          containerRegistry: $(containerRegistryServicePrincipal)

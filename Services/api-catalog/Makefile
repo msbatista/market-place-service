@@ -47,3 +47,31 @@ aks_get_nodes:
 
 run_backend:
 	@docker-compose -f ./docker-compose/docker-compose.backend.yml up --force-recreate --build -d
+
+unit_tests:
+	@echo "Running unit tests..."
+	@dotnet test ./test/UnitTest/UnitTest.csproj \
+	/p:CollectCoverage=true \
+	/p:CoverletOutputFormat=opencover \
+	--no-restore
+
+component_tests:
+	@echo "Running component tests..."
+	@dotnet test ./test/ComponentTest/ComponentTest.csproj \
+	/p:CollectCoverage=true \
+	/p:CoverletOutputFormat=opencover \
+	--no-restore
+
+integration_tests:
+	@echo "Running integration tests..."
+	@dotnet test ./test/UnitTest/UnitTest.csproj \
+	/p:CollectCoverage=true \
+	/p:CoverletOutputFormat=opencover \
+	--no-restore
+
+e2e:
+	@echo "Running e2e tests..."
+	@dotnet test ./test/EndToEndTests/EndToEndTests.csproj \
+	/p:CollectCoverage=true \
+	/p:CoverletOutputFormat=opencover \
+	--no-restore	
