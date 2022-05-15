@@ -43,6 +43,6 @@ public class GetCatalogItemsUseCase : IGetCatalogItemsUseCase
                 .ToArray();
         }
 
-        return await _catalogItemRepository.GetCatalogItems(parsedIds);
+        return await _catalogItemRepository.GetCatalogItems(parsedIds, pageSize, pageIndex);
     }
 }

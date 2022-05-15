@@ -20,8 +20,15 @@ public sealed class PaginatedItems<TEntity> where TEntity : class
         this.PageIndex = pageIndex;
         this.Count = count;
         this.Data = data;
-        this.TotalPages = (long)Math.Ceiling((this.Count / ((decimal)this.PageSize)));
+        this.CurrentPageCount = data.Count;
+        this.TotalPages = (long)Math.Ceiling((count / ((decimal)pageSize))) - 1;
     }
+
+    /// <summary>
+    /// Get total of items in current page.
+    /// </summary>
+    /// <value></value>
+    public long CurrentPageCount {get;}
 
     /// <summary>
     /// Gets request data content.
