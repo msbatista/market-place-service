@@ -170,6 +170,7 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
     {
         _context.Entry(oldItem).State = EntityState.Detached;
         _context.Entry(newItem).State = EntityState.Modified;
+        
         _context.CatalogItems.Update(newItem);
     }
 

@@ -26,7 +26,6 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
     /// <param name="logger">Logger.</param>
     public UpdateItemUseCase(
         IUnitOfWork uow,
-        IEntityFactory entityFactory,
         ICatalogItemRepository catalogItemRepository,
         ILogger<UpdateItemUseCase> logger)
     {
