@@ -41,24 +41,24 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
 
         ICatalogItem? foundItem = await _catalogItemRepository.GetCatalogItemById(new CatalogItemId(id));
 
-        if (foundItem is not CatalogItem)
+        if (foundItem is CatalogItem item)
+        {
+            var newItem = this.createItemCatalog(id, catalogItem);
+
+            // TODO: If price is different publish the item into a queue and database by using atomic transaction strategy.
+
+            _catalogItemRepository.UpdateCatalogItem(item, newItem);
+
+            var affectedRows = await _uow.SaveChangesAsync();
+
+            _logger.LogInformation("Item with Id: '{id}'. Affected rows: {affectedRows}", id, affectedRows);
+        }
+        else
         {
             _logger.LogError("Not able to find item with {id}", id);
 
             throw new ObjectNotFoundException($"Not able to find item with {id}");
         }
-
-        var item = (CatalogItem)foundItem;
-
-        var newItem = this.createItemCatalog(id, catalogItem);
-
-        // TODO: If price is different publish the item into a queue and database by using atomic transaction strategy.
-
-        _catalogItemRepository.UpdateCatalogItem(item, newItem);
-
-        var affectedRows = await _uow.SaveChangesAsync();
-
-        _logger.LogInformation("Item with Id: '{id}'. Affected rows: {affectedRows}", id, affectedRows);
     }
 
     private CatalogItem createItemCatalog(Guid id, CatalogItemModel catalogItem)
