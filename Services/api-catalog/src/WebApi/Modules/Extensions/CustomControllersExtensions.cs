@@ -1,3 +1,5 @@
+using FluentValidation.AspNetCore;
+using WebApi.Models;
 using WebApi.Modules.Filters;
 
 namespace WebApi.Modules.Extensions;
@@ -21,6 +23,7 @@ public static class CustomControllersExtensions
                 options.Filters.Add(typeof(InternalExceptionFilter));
                 options.Filters.Add(typeof(ObjectNotFoundExceptionFilter));
             })
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CatalogItemModel>())
             .AddJsonOptions(options => 
             {
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;

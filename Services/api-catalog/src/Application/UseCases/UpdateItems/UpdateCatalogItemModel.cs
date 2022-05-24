@@ -1,13 +1,14 @@
-namespace Application.UseCases.Model;
+namespace Application.UseCases.UpdateItems;
 
 /// <summary>
-/// Create item mode.
+/// Catalog controller.
 /// </summary>
-public sealed record CatalogItemModel
+public class UpdateCatalogItemModel
 {
     /// <summary>
-    /// Initializes an instance of CatalogItemModel.
+    /// Initializes an instance of CreateCatalogItemModel.
     /// </summary>
+    /// <param name="id">Item id.</param>
     /// <param name="name">Product name.</param>
     /// <param name="description">Product description.</param>
     /// <param name="value">Product price.</param>
@@ -20,7 +21,8 @@ public sealed record CatalogItemModel
     /// <param name="maxStockThreshold">Warehouse threshold limit.</param>
     /// <param name="catalogTypeId">Product type.</param>
     /// <param name="catalogBrandId">Product brand.</param>
-    public CatalogItemModel(
+    public UpdateCatalogItemModel(
+        Guid id,
         string name,
         string description,
         decimal value,
@@ -31,10 +33,10 @@ public sealed record CatalogItemModel
         int restockThreshold,
         bool onReorder,
         int maxStockThreshold,
-        string? pictureAsBase64,
         Guid catalogTypeId,
         Guid catalogBrandId)
     {
+        Id = Id;
         Name = name;
         Description = description;
         Value = value;
@@ -45,10 +47,15 @@ public sealed record CatalogItemModel
         RestockThreshold = restockThreshold;
         OnReorder = onReorder;
         MaxStockThreshold = maxStockThreshold;
-        PictureAsBase64 = pictureAsBase64;
         CatalogTypeId = catalogTypeId;
         CatalogBrandId = catalogBrandId;
     }
+
+    /// <summary>
+    /// Gets or inits object id.
+    /// </summary>
+    /// <value>Guid.</value>
+    public Guid Id { get; init; }
 
     /// <summary>
     /// Gets or inits Name.
@@ -123,10 +130,4 @@ public sealed record CatalogItemModel
     /// </summary>
     /// <value>Guid.</value>
     public Guid CatalogBrandId { get; init; }
-
-    /// <summary>
-    /// Get or inits PictureAsBase64.
-    /// </summary>
-    /// <value>string.</value>
-    public string? PictureAsBase64 { get; init; }
 }

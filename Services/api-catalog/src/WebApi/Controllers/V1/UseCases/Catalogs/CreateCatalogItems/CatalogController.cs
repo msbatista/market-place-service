@@ -1,8 +1,8 @@
 using System.Net.Mime;
 using Application.UseCases.CreateCatalogItems;
-using Application.UseCases.Model;
 using Domain.CatalogItems;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Models;
 using WebApi.ViewModels.ValidationModels;
 
 namespace WebApi.Controllers.V1.UseCases.CreateCatalogItems;
@@ -40,7 +40,22 @@ public sealed class CatalogController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetailsModel))]
     public async Task<IActionResult> CreateItemAsync([FromBody] CatalogItemModel catalogItemModel)
     {
-        var item = await _useCase.Execute(catalogItemModel);
+        var createCatalogItemRequest = new CreateCatalogItemModel(
+            catalogItemModel.Name,
+            catalogItemModel.Description,
+            catalogItemModel.Value,
+            catalogItemModel.Currency,
+            catalogItemModel.AvailableStock,
+            catalogItemModel.PictureName,
+            catalogItemModel.PictureUri,
+            catalogItemModel.RestockThreshold,
+            catalogItemModel.OnReorder,
+            catalogItemModel.MaxStockThreshold,
+            catalogItemModel.CatalogTypeId,
+            catalogItemModel.CatalogBrandId
+        );
+        
+        var item = await _useCase.Execute(createCatalogItemRequest);
 
         return CreatedAtAction(
             nameof(GetCatalogItemById.CatalogController.Get), 

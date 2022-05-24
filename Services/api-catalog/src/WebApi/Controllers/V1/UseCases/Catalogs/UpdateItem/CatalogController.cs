@@ -1,8 +1,7 @@
 using System.Net.Mime;
-using Application.UseCases.CreateCatalogItems;
-using Application.UseCases.Model;
-using Application.UseCases.UpdateItem;
+using Application.UseCases.UpdateItems;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Models;
 using WebApi.ViewModels.ValidationModels;
 
 namespace WebApi.Controllers.V1.UseCases.UpdateItem;
@@ -33,15 +32,30 @@ public sealed class CatalogController : ControllerBase
     /// <summary>
     /// Updates a item into inventory.
     /// </summary>
-    /// <param name="id"></param>
     /// <param name="catalogItemModel"></param>
     /// <returns>IActionResult.</returns>
-    [HttpPut("items/{id}")]
+    [HttpPut("items")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetailsModel))]
-    public async Task<IActionResult> CreateItemAsync([FromRoute] Guid id, [FromBody] CatalogItemModel catalogItemModel)
+    public async Task<IActionResult> CreateItemAsync([FromBody] CatalogItemModel catalogItemModel)
     {
-        await _useCase.Execute(id, catalogItemModel);
+        var updateCatalogItemModel = new UpdateCatalogItemModel(
+            catalogItemModel.Id,
+            catalogItemModel.Name,
+            catalogItemModel.Description,
+            catalogItemModel.Value,
+            catalogItemModel.Currency,
+            catalogItemModel.AvailableStock,
+            catalogItemModel.PictureName,
+            catalogItemModel.PictureUri,
+            catalogItemModel.RestockThreshold,
+            catalogItemModel.OnReorder,
+            catalogItemModel.MaxStockThreshold,
+            catalogItemModel.CatalogTypeId,
+            catalogItemModel.CatalogBrandId
+        );
+
+        await _useCase.Execute(updateCatalogItemModel);
 
         return NoContent();
     }

@@ -1,4 +1,3 @@
-using Application.UseCases.Model;
 using Domain.CatalogItems;
 
 namespace Application.UseCases.CreateCatalogItems;
@@ -13,5 +12,5 @@ public interface ICreateCatalogItemUseCase
     /// </summary>
     /// <param name="catalogItem">Item to be inserted.</param>
     /// <returns>The created product.</returns>
-    Task<CatalogItem> Execute(CatalogItemModel catalogItem);
+    Task<CatalogItem> Execute(CreateCatalogItemModel catalogItem);
 }

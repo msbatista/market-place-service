@@ -1,5 +1,4 @@
 using Application.Services;
-using Application.UseCases.Model;
 using Domain;
 using Domain.CatalogItems;
 using Microsoft.Extensions.Logging;
@@ -36,9 +35,9 @@ public sealed class CreateCatalogItemUseCase : ICreateCatalogItemUseCase
     }
 
     /// <inheritdoc />
-    public async Task<CatalogItem> Execute(CatalogItemModel catalogItem)
+    public async Task<CatalogItem> Execute(CreateCatalogItemModel catalogItem)
     {
-        _logger.LogInformation("Inseting product into database.");
+        _logger.LogInformation("Inserting product into database.");
 
         var item = createItemCatalog(catalogItem);
 
@@ -51,7 +50,7 @@ public sealed class CreateCatalogItemUseCase : ICreateCatalogItemUseCase
         return item;
     }
 
-    private CatalogItem createItemCatalog(CatalogItemModel catalogItem)
+    private CatalogItem createItemCatalog(CreateCatalogItemModel catalogItem)
     {
         return _entityFactory.NewCatalogItem(
             catalogItem.Name,
@@ -64,7 +63,6 @@ public sealed class CreateCatalogItemUseCase : ICreateCatalogItemUseCase
             catalogItem.RestockThreshold,
             catalogItem.OnReorder,
             catalogItem.MaxStockThreshold,
-            catalogItem.PictureAsBase64,
             catalogItem.CatalogTypeId,
             catalogItem.CatalogBrandId
         );

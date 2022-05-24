@@ -1,7 +1,6 @@
 using Domain.CatalogBrands;
 using Domain.CatalogItems;
 using Domain.CatalogTypes;
-using Domain.ValueObject;
 
 namespace Domain;
 
@@ -37,7 +36,6 @@ public interface IEntityFactory
     /// <param name="restockThreshold">Available stock at which we should reorder.</param>
     /// <param name="onReorder">Indicates if a item is in reorder.</param>
     /// <param name="maxStockThreshold">Maximum number of units that can be in-stock due to logistical/physical constraints in warehouse.</param>
-    /// <param name="pictureAsBase64">Base 64 image</param>
     /// <param name="catalogTypeId">Item type.</param>
     /// <param name="catalogBrandId">Item brand.</param>
     /// <returns>CatalogItem.</returns>
@@ -52,7 +50,6 @@ public interface IEntityFactory
         int restockThreshold,
         bool onReorder,
         int maxStockThreshold,
-        string? pictureAsBase64,
         Guid catalogTypeId,
         Guid catalogBrandId);
 }

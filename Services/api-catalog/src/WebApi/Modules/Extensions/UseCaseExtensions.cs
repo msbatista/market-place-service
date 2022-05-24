@@ -8,7 +8,7 @@ using Application.UseCases.GetCatalogItemsByType;
 using Application.UseCases.GetCatalogItemsByTypeAndBrand;
 using Application.UseCases.GetCatalogItemsWithName;
 using Application.UseCases.GetCatalogTypes;
-using Application.UseCases.UpdateItem;
+using Application.UseCases.UpdateItems;
 
 namespace WebApi.Modules.Extensions;
 

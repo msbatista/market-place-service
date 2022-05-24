@@ -1,6 +1,7 @@
 BASE_DIR := ./
 APP_NAME := catalog-api
-TAG := v1
+BUILD_CONFIGURATION := Release
+TAG := v1.1
 # ACR_REGISTRY := arclabtest
 
 add_migration:
@@ -44,6 +45,12 @@ aks_get_credentials:
 
 aks_get_nodes:
 	@kubectl get nodes
+
+get_aks_resources:
+	kubectl get all -n local
+
+deploy_to_aks:
+	helm upgrade --install catalog-api . --namespace=local --set catalog-api.image.tag="1.1"
 
 run_backend:
 	@docker-compose -f ./docker-compose/docker-compose.backend.yml up --force-recreate --build -d

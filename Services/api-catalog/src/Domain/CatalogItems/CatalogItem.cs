@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-using BuildingBlocks.Modules.Extensions;
 using Domain.CatalogBrands;
 using Domain.CatalogTypes;
 using Domain.ValueObject;
@@ -39,7 +37,6 @@ public class CatalogItem : ICatalogItem
         int restockThreshold,
         bool onReorder,
         int maxStockThreshold,
-        byte[]? picture,
         CatalogTypeId catalogTypeId,
         CatalogBrandId catalogBrandId)
     {
@@ -57,7 +54,6 @@ public class CatalogItem : ICatalogItem
         CatalogBrandId = catalogBrandId;
         Value = value;
         Currency = currency;
-        Picture = picture;
     }
 
     /// <summary>
@@ -70,67 +66,67 @@ public class CatalogItem : ICatalogItem
     /// Gets item name.
     /// </summary>
     /// <value>string.</value>
-    public string Name { get; set; }
+    public string Name { get; }
 
     /// <summary>
     /// Item description.
     /// </summary>
     /// <value>string.</value>
-    public string Description { get; set; }
+    public string Description { get; }
 
     /// <summary>
     /// Item price.
     /// </summary>
     /// <value>Price.</value>
-    public Price Price { get; set; }
+    public Price Price { get; }
 
     /// <summary>
     /// Gets item price.
     /// </summary>
     /// <value>decimal.</value>
-    public decimal Value { get; set; }
+    public decimal Value { get; }
 
     /// <summary>
     /// Gets item currency.
     /// </summary>
     /// <value>string.</value>
-    public string Currency { get; set; }
+    public string Currency { get; }
 
     /// <summary>
     /// Gets available stock.
     /// </summary>
     /// <value>int.</value>
-    public int AvailableStock { get; set; }
+    public int AvailableStock { get; private set; }
 
     /// <summary>
     /// Gets picture name.
     /// </summary>
     /// <value>string.</value>
-    public string PictureName { get; set; }
+    public string PictureName { get; }
 
     /// <summary>
     /// Gets picture uri.
     /// </summary>
     /// <value>string.</value>
-    public string PictureUri { get; set; }
+    public string PictureUri { get; }
 
     /// <summary>
     /// Gets restock threshold.
     /// </summary>
     /// <value>int.</value>
-    public int RestockThreshold { get; set; }
+    public int RestockThreshold { get; }
 
     /// <summary>
     /// Gets whether or not item is on reorder.
     /// </summary>
     /// <value>bool.</value>
-    public bool OnReorder { get; set; }
+    public bool OnReorder { get; }
 
     /// <summary>
     /// Gets maximum stock threshold.
     /// </summary>
     /// <value>int.</value>
-    public int MaxStockThreshold { get; set; }
+    public int MaxStockThreshold { get; }
 
     /// <inheritdoc />
     public CatalogBrandId CatalogBrandId { get; }
@@ -139,19 +135,10 @@ public class CatalogItem : ICatalogItem
     public CatalogTypeId CatalogTypeId { get; }
 
     /// <inheritdoc />
-    public CatalogBrand? CatalogBrand { get; set; }
+    public CatalogBrand? CatalogBrand { get; }
 
     /// <inheritdoc />
-    public CatalogType? CatalogType { get; set; }
-
-    public string PictureBase64 => Picture?.AsString() ?? "";
-
-    /// <summary>
-    /// Picture.
-    /// </summary>
-    /// <value>byte[]</value>
-    [JsonIgnore]
-    public byte[]? Picture { get; set; }
+    public CatalogType? CatalogType { get; }
 
     /// <inheritdoc/>
     public int AddStock(int quantityToBeAdded)

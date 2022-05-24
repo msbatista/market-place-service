@@ -1,13 +1,11 @@
 using Application.Exceptions;
 using Application.Services;
-using Application.UseCases.Model;
-using BuildingBlocks.Modules.Extensions;
 using Domain;
 using Domain.CatalogItems;
 using Domain.ValueObject;
 using Microsoft.Extensions.Logging;
 
-namespace Application.UseCases.UpdateItem;
+namespace Application.UseCases.UpdateItems;
 
 /// <summary>
 /// Update a catalog item into the inventory.
@@ -35,15 +33,15 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
     }
 
     /// <inheritdoc />
-    public async Task Execute(Guid id, CatalogItemModel catalogItem)
+    public async Task Execute(UpdateCatalogItemModel catalogItem)
     {
         _logger.LogInformation("Updating catalog item.");
 
-        ICatalogItem? foundItem = await _catalogItemRepository.GetCatalogItemById(new CatalogItemId(id));
+        ICatalogItem? foundItem = await _catalogItemRepository.GetCatalogItemById(new CatalogItemId(catalogItem.Id));
 
         if (foundItem is CatalogItem item)
         {
-            var newItem = this.createItemCatalog(id, catalogItem);
+            var newItem = this.createItemCatalog(catalogItem);
 
             // TODO: If price is different publish the item into a queue and database by using atomic transaction strategy.
 
@@ -51,20 +49,20 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
 
             var affectedRows = await _uow.SaveChangesAsync();
 
-            _logger.LogInformation("Item with Id: '{id}'. Affected rows: {affectedRows}", id, affectedRows);
+            _logger.LogInformation("Item with Id: '{id}'. Affected rows: {affectedRows}", catalogItem.Id, affectedRows);
         }
         else
         {
-            _logger.LogError("Not able to find item with {id}", id);
+            _logger.LogError("Not able to find item with {id}", catalogItem.Id);
 
-            throw new ObjectNotFoundException($"Not able to find item with {id}");
+            throw new ObjectNotFoundException($"Not able to find item with {catalogItem.Id}");
         }
     }
 
-    private CatalogItem createItemCatalog(Guid id, CatalogItemModel catalogItem)
+    private CatalogItem createItemCatalog(UpdateCatalogItemModel catalogItem)
     {
         return new CatalogItem(
-            new(id),
+            new(catalogItem.Id),
             catalogItem.Name,
             catalogItem.Description,
             catalogItem.Value,
@@ -75,7 +73,6 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
             catalogItem.RestockThreshold,
             catalogItem.OnReorder,
             catalogItem.MaxStockThreshold,
-            catalogItem.PictureAsBase64?.AsByteArray(),
             new(catalogItem.CatalogTypeId),
             new(catalogItem.CatalogBrandId)
         );

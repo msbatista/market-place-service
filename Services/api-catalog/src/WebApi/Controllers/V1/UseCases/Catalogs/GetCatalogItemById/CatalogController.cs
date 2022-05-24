@@ -35,7 +35,7 @@ public sealed class CatalogController : ControllerBase
     /// Get an item by id.
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>IActionResult.</returns>
+    /// <returns>Task of IActionResult.</returns>
     [HttpGet("items/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItem))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetailsModel))]
