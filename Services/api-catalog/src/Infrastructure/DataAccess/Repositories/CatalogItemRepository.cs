@@ -21,28 +21,13 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
     public CatalogItemRepository(CatalogContext context) => _context = context;
 
     /// <inheritdoc />
-    public async Task CreateCatalogItem(CatalogItem catalogItem)
-    {
-        await _context
-            .CatalogItems
-            .AddAsync(catalogItem);
-    }
+    public async Task CreateCatalogItem(CatalogItem catalogItem) => await _context.CatalogItems.AddAsync(catalogItem);
 
     /// <inheritdoc />
-    public void DeleteCatalogItem(CatalogItem catalogItem)
-    {
-        _context
-           .CatalogItems
-           .Remove(catalogItem);
-    }
+    public void DeleteCatalogItem(CatalogItem catalogItem) => _context.CatalogItems.Remove(catalogItem);
 
     /// <inheritdoc />
-    public async Task<IList<CatalogBrand>> GetCatalogBrands()
-    {
-        return await _context
-            .CatalogBrands
-            .ToListAsync();
-    }
+    public async Task<IList<CatalogBrand>> GetCatalogBrands() => await _context.CatalogBrands.ToListAsync();
 
     /// <inheritdoc />
     public async Task<ICatalogItem> GetCatalogItemById(CatalogItemId id)
@@ -61,7 +46,7 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
 
     /// <inheritdoc />
     public async Task<PaginatedItems<CatalogItem>> GetCatalogItems(
-        CatalogItemId[]? ids,         
+        CatalogItemId[]? ids,
         int pageSize = 10,
         int pageIndex = 0)
     {
@@ -80,6 +65,7 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
         var items = await baseQuery
             .Skip(pageSize * pageIndex)
             .Take(pageSize)
+            .AsNoTracking()
             .ToListAsync();
 
         return new PaginatedItems<CatalogItem>(pageSize, pageIndex, count, items);
@@ -101,6 +87,7 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
         var items = await baseQuery
             .Skip(pageSize * pageIndex)
             .Take(pageSize)
+            .AsNoTracking()
             .ToListAsync();
 
         return new PaginatedItems<CatalogItem>(pageSize, pageIndex, count, items);
@@ -122,6 +109,7 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
         var items = await baseQuery
             .Skip(pageSize * pageIndex)
             .Take(pageSize)
+            .AsNoTracking()
             .ToListAsync();
 
         return new PaginatedItems<CatalogItem>(pageSize, pageIndex, count, items);
@@ -143,13 +131,17 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
         var items = await baseQuery
             .Skip(pageSize * pageIndex)
             .Take(pageSize)
+            .AsNoTracking()
             .ToListAsync();
 
         return new PaginatedItems<CatalogItem>(pageSize, pageIndex, count, items);
     }
 
     /// <inheritdoc />
-    public async Task<PaginatedItems<CatalogItem>> GetCatalogItemsWithName(string name, int pageSize = 10, int pageIndex = 0)
+    public async Task<PaginatedItems<CatalogItem>> GetCatalogItemsWithName(
+        string name,
+        int pageSize = 10,
+        int pageIndex = 0)
     {
         var baseQuery = _context
             .CatalogItems
@@ -160,6 +152,7 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
         var items = await baseQuery
             .Skip(pageSize * pageIndex)
             .Take(pageSize)
+            .AsNoTracking()
             .ToListAsync();
 
         return new PaginatedItems<CatalogItem>(pageSize, pageIndex, count, items);
@@ -170,15 +163,10 @@ public sealed class CatalogItemRepository : ICatalogItemRepository
     {
         _context.Entry(oldItem).State = EntityState.Detached;
         _context.Entry(newItem).State = EntityState.Modified;
-        
+
         _context.CatalogItems.Update(newItem);
     }
 
     /// <inheritdoc />
-    public async Task<IList<CatalogType>> GetCatalogTypes()
-    {
-        return await _context
-            .CatalogTypes
-            .ToListAsync();
-    }
+    public async Task<IList<CatalogType>> GetCatalogTypes() => await _context.CatalogTypes.ToListAsync();
 }
