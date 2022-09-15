@@ -53,9 +53,9 @@ public sealed class UpdateItemUseCase : IUpdateItemUseCase
         }
         else
         {
-            _logger.LogError("Not able to find item with {id}", catalogItem.Id);
+            _logger.LogError("Not able to find item with id: '{id}'", catalogItem.Id);
 
-            throw new ObjectNotFoundException($"Not able to find item with {catalogItem.Id}");
+            throw new ObjectNotFoundException($"Not able to find item with id: '{catalogItem.Id}'");
         }
     }
 

@@ -48,6 +48,6 @@ public class DeleteItemUseCase : IDeleteItemUseCase
             return;
         }
 
-        throw new ObjectNotFoundException($"Not able to find item with id: {id}");
+        throw new ObjectNotFoundException($"Not able to find item with id: '{id}'");
     }
 }

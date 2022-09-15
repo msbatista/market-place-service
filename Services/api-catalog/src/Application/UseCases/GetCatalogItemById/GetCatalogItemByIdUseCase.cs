@@ -42,8 +42,8 @@ public sealed class GetCatalogItemByIdUseCase : IGetCatalogItemByIdUseCase
             return item;
         }
 
-        _logger.LogInformation("Not able to find item with {id}", id);
+        _logger.LogInformation("Not able to find item with id: '{id}'", id);
 
-        throw new ObjectNotFoundException($"Not able to find item with {id}");
+        throw new ObjectNotFoundException($"Not able to find item with 'id': {id}");
     }
 }
