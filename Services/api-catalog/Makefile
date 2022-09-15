@@ -26,6 +26,15 @@ publish:
 	    --no-restore
 	@zip -r output.zip $(BUILD_STAGE_DIR)
 
+run_backend:
+	@echo "Starting backend services ..."
+	@docker-compose -f ./docker-compose/docker-compose.backend.yml up -d
+
+
+start_database:
+	@echo "Starting database"
+	@docker-compose -f ./docker-compose/docker-compose.sql-server.yml up -d
+
 docker_build:
 	@echo "Building docker image"
 	@docker build -t "$(APP_NAME):$(TAG)" .
