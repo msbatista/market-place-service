@@ -42,7 +42,7 @@ public class GetCatalogItemsByTypeAndBrandUseCase : IGetCatalogItemsByTypeAndBra
             .GetCatalogItemsByTypeAndBrand(
                 catalogTypeId, 
                 catalogBrandId, 
-                pageSize, 
+                Math.Min(pageSize, 5000), 
                 pageIndex);
     }
 }

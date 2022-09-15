@@ -39,7 +39,7 @@ public class GetCatalogItemsByTypeUseCase : IGetCatalogItemsByTypeUseCase
         return await _catalogItemRepository
             .GetCatalogItemsByType(
                 catalogTypeId, 
-                pageSize, 
+                Math.Min(pageSize, 5000), 
                 pageIndex);
     }
 }

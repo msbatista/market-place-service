@@ -27,7 +27,10 @@ public class GetCatalogItemsUseCase : IGetCatalogItemsUseCase
     }
 
     /// <inheritdoc />
-    public async Task<PaginatedItems<CatalogItem>> Execute(string? ids, int pageSize = 10, int pageIndex = 0)
+    public async Task<PaginatedItems<CatalogItem>> Execute(
+        string? ids,
+        int pageSize = 10,
+        int pageIndex = 0)
     {
         _logger.LogInformation("Fetching inventory items.");
 
@@ -43,6 +46,6 @@ public class GetCatalogItemsUseCase : IGetCatalogItemsUseCase
                 .ToArray();
         }
 
-        return await _catalogItemRepository.GetCatalogItems(parsedIds, pageSize, pageIndex);
+        return await _catalogItemRepository.GetCatalogItems(parsedIds, Math.Min(pageSize, 5000), pageIndex);
     }
 }

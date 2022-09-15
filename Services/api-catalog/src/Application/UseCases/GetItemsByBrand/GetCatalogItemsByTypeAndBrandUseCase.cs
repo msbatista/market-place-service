@@ -39,7 +39,7 @@ public class GetCatalogItemsByBrandUseCase : IGetCatalogItemsByBrandUseCase
         return await _catalogItemRepository
             .GetCatalogItemsByBrand(
                 catalogBrandId, 
-                pageSize, 
+                Math.Min(pageSize, 5000), 
                 pageIndex);
     }
 }

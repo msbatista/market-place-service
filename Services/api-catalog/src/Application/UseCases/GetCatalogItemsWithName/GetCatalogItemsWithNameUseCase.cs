@@ -17,17 +17,22 @@ public sealed class GetCatalogItemsWithNameUseCase : IGetCatalogItemsWithNameUse
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="catalogItemRepository"></param>
-    public GetCatalogItemsWithNameUseCase(ILogger<GetCatalogItemsWithNameUseCase> logger, ICatalogItemRepository catalogItemRepository)
+    public GetCatalogItemsWithNameUseCase(
+        ILogger<GetCatalogItemsWithNameUseCase> logger,
+        ICatalogItemRepository catalogItemRepository)
     {
         _logger = logger;
         _catalogItemRepository = catalogItemRepository;
     }
 
     /// <inheritdoc />
-    public async Task<PaginatedItems<CatalogItem>> Execute(string name, int pageSize = 10, int pageIndex = 0)
+    public async Task<PaginatedItems<CatalogItem>> Execute(
+        string name,
+        int pageSize = 10,
+        int pageIndex = 0)
     {
         _logger.LogInformation("Requesting items for name: {name}", name);
 
-        return await _catalogItemRepository.GetCatalogItemsWithName(name, pageSize, pageIndex);
+        return await _catalogItemRepository.GetCatalogItemsWithName(name, Math.Min(pageSize, 5000), pageIndex);
     }
 }
